@@ -1,5 +1,6 @@
 import React from "react";
 import { HighlightCard } from "../../components/HighlightCard";
+import { TransactionCard, TransactionCardProps } from "../../components/TransactionCard";
 import {
     Container,
     Header,
@@ -10,11 +11,43 @@ import {
     UserName,
     Userwrapper,
     Icon,
-    HighlightCards
+    HighlightCards,
+    Transactions,
+    Title,
+    TransactionList
 } from "./styles";
 
+export interface DatalistProps extends TransactionCardProps {
+    id: string;
+}
 
 export function Dashboard() {
+    const data: DatalistProps[] = [
+        {
+            id: '1',
+            type: 'positive',
+            title: "Desenvolvimento de site",
+            amount: "R$ 12.0000,00",
+            category: { name: 'Vendas', icon: 'dollar-sign' },
+            date: "12/04/2022"
+        },
+        {
+            id: '2',
+            type: 'negative',
+            title: "Pizza",
+            amount: "R$ 12.0000,00",
+            category: { name: 'Alimentação', icon: 'coffee' },
+            date: "12/04/2022"
+        },
+        {
+            id: '3',
+            type: 'positive',
+            title: "Trabalho",
+            amount: "R$ 12.0000,00",
+            category: { name: 'Vendas', icon: 'shopping-bag' },
+            date: "12/04/2022"
+        }
+    ]
     return (
         <Container>
             <Header>
@@ -34,6 +67,17 @@ export function Dashboard() {
                 <HighlightCard type="down" title="Saídas" amount="- R$ 5.400,00" lastTransaction="Última saída dia 3 de abril" />
                 <HighlightCard type="total" title="Total" amount="R$ 5.400,00" lastTransaction="1 à 13 de abril" />
             </HighlightCards>
+
+            <Transactions>
+                <Title>Listagem</Title>
+                <TransactionList
+                    data={data}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => <TransactionCard data={item} />}
+                />
+
+            </Transactions>
+
         </Container >
     )
 }
